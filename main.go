@@ -1,13 +1,10 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"onlineLibrary/DB_connection"
 	"onlineLibrary/Indexes"
-	"onlineLibrary/Models"
-	"os"
+	"onlineLibrary/Routes"
 )
 
 func init () {
@@ -39,32 +36,11 @@ func main() {
 	fmt.Println("In the main function")
 	fmt.Println("database created")
 
+	Routes.Router()
+
 
 	// opening json file
-	File, errOsOpen := os.Open("MOCK_DATA.json")
 
-	defer File.Close()
-
-	if errOsOpen != nil {
-		fmt.Println("Error in opening json file")
-		fmt.Println(errOsOpen)
-	}
-
-	byteValue, errReadfile := ioutil.ReadAll(File)
-
-	if errReadfile != nil {
-		fmt.Println("Error in readfile ")
-		fmt.Println(errReadfile)
-	}
-
-
-
-	var data []Models.Books
-
-
-	json.Unmarshal(byteValue, &data)
-
-	fmt.Println(data[0])
 
 	//defer DB_connection.DbRedis.Close()
 	defer DB_connection.DbElastic.Stop()
