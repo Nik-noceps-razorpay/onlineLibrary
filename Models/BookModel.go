@@ -15,8 +15,8 @@ var BookMapping = `{
 	},
 	"mappings":{
 		"properties":{
-			"Title": {"type": "string"},
-			"Author": {"type": "string"},
+			"Title": {"type": "text"},
+			"Author": {"type": "text"},
 			"Publisher": {"type": "keyword"}
 		}
 	}
