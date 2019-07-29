@@ -1,11 +1,17 @@
 package Models
 
+import (
+	"time"
+)
+
+
 
 
 type Books struct {
-	Title  		string 		`json:"Title"`
-	Author 		string 		`json:"Author"`
-	Publisher 	string 		`json:"publisher"`
+	Title     string `json:"Title"`
+	Author    string `json:"Author"`
+	Publisher string `json:"Publisher"`
+	CreatedAt time.Time
 }
 
 var BookMapping = `{
@@ -14,10 +20,16 @@ var BookMapping = `{
 		"number_of_replicas": 0
 	},
 	"mappings":{
-		"properties":{
-			"Title": {"type": "text"},
-			"Author": {"type": "text"},
-			"Publisher": {"type": "keyword"}
+		"_doc":{
+			"properties":{
+				"Title": {"type": "text"},
+				"Author": {"type": "text"},
+				"Publisher": {"type": "keyword"},
+				"CreatedAt": {
+					"type": "date"
+					"format": "yyyy-MM-dd HH:mm:ss"
+				}
+			}
 		}
 	}
 }`

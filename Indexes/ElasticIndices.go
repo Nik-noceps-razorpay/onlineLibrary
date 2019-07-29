@@ -21,17 +21,6 @@ func MakeIndex(x string) {
 	//fmt.Println("exists value is :", exists)
 
 
-	//
-
-	//if exists {
-	//	_, err1 := DB_connection.DbElastic.DeleteIndex("library").Do(context.TODO())
-	//
-	//	if err1 != nil {
-	//		fmt.Println("error in deleting index")
-	//		fmt.Println(err1)
-	//	}
-	//	exists = false
-	//}
 
 	if err != nil {
 		// Handle error
@@ -54,6 +43,8 @@ func MakeIndex(x string) {
 			// Not acknowledged
 			fmt.Println("Create index not acknowledged")
 		}
+	} else {
+		fmt.Println("Index", x, "exists")
 	}
 
 	//--------------------------------- Get all index names ---------------------------------

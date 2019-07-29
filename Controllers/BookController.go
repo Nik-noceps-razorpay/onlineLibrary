@@ -10,6 +10,7 @@ import (
 	"onlineLibrary/DB_connection"
 	"onlineLibrary/Models"
 	"strings"
+	"time"
 
 	//"os"
 	//"sync"
@@ -39,6 +40,7 @@ func CreateBookDocument(c *gin.Context) {
 }
 
 
+
 func GetBookDocument(c *gin.Context) {
 	fmt.Println("Inside GetBookDocument function")
 
@@ -64,6 +66,7 @@ func GetBookDocument(c *gin.Context) {
 }
 
 
+
 func UploadFromFile(c *gin.Context) {
 	fmt.Println("Inside uploadfromfile function")
 
@@ -85,6 +88,7 @@ func UploadFromFile(c *gin.Context) {
 
 	json.Unmarshal(byteValue, &data)
 
+
 	for i := 0; i < len(data) ; i++ {
 
 		Put(c, data[i])
@@ -92,6 +96,8 @@ func UploadFromFile(c *gin.Context) {
 	}
 
 }
+
+
 
 func SearchDocs(c *gin.Context) {
 
@@ -140,7 +146,7 @@ func SearchDocs(c *gin.Context) {
 				fmt.Println(err)
 			}
 
-			fmt.Println("Book Title :", t.Title, "\nAuthor:", t.Author, "\nPublisher:", t.Publisher)
+			fmt.Println("Book Title :", t.Title, "\nAuthor:", t.Author, "\nPublisher:", t.Publisher, "\nCreatedAt:", t.CreatedAt )
 
 
 		}
@@ -156,6 +162,11 @@ func SearchDocs(c *gin.Context) {
 
 func Put(ctx *gin.Context, x Models.Books) {
 	//fmt.Printf("% T\n",x)
+
+	x.CreatedAt = time.Now()
+
+	fmt.Println(x)
+
 	fmt.Println("Putting json entry number: ")
 	put, err  := DB_connection.DbElastic.Index().
 		Index("library").
