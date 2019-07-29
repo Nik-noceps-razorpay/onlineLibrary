@@ -135,13 +135,15 @@ func SearchDocs(c *gin.Context) {
 				Gte(time1).
 				Lte(time2)
 
-		keepalive := fmt.Sprint(formDate["pageNo"],"m")
 		size, _ := strconv.ParseInt(formDate["rpp"],10,0)
+		from, _ := strconv.ParseInt(formDate["pageNo"],10,0)
 
-		searchResult, err := DB_connection.DbElastic.Scroll().
+		from *= size
+
+		searchResult, err := DB_connection.DbElastic.Search().
 			Index("library").
 			Query(query).
-			KeepAlive(keepalive).
+			From(int(from)).
 			Size(int(size)).
 			Do(context.Background())
 
