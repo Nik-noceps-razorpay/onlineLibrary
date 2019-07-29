@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/Controllers/BookController.go" line="203" mnemonic="5" />
+    <bookmark url="file://$PROJECT_DIR$/Controllers/BookController.go" line="175" mnemonic="5" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5bc56612-0374-46aa-858d-19e3a729eb02" name="Default Changelist" comment="">
@@ -13,8 +13,6 @@
       <change beforePath="$PROJECT_DIR$/../github.com/jinzhu/gorm" beforeDir="false" afterPath="$PROJECT_DIR$/../github.com/jinzhu/gorm" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../gopkg.in/gin-gonic/gin.v1" beforeDir="false" afterPath="$PROJECT_DIR$/../gopkg.in/gin-gonic/gin.v1" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Controllers/BookController.go" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/BookController.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Indexes/ElasticIndices.go" beforeDir="false" afterPath="$PROJECT_DIR$/Indexes/ElasticIndices.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/BookModel.go" beforeDir="false" afterPath="$PROJECT_DIR$/Models/BookModel.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../url_healthmonitor/Models/Url.go" beforeDir="false" afterPath="$PROJECT_DIR$/../url_healthmonitor/Models/Url.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -46,8 +44,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Controllers/BookController.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="257">
-              <caret line="160" column="40" selection-start-line="160" selection-start-column="40" selection-end-line="160" selection-end-column="40" />
+            <state relative-caret-position="496">
+              <caret line="150" selection-start-line="150" selection-end-line="150" />
             </state>
           </provider>
         </entry>
@@ -130,8 +128,9 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" fullScreen="true">
-    <option name="width" value="1440" />
-    <option name="height" value="900" />
+    <option name="x" value="1440" />
+    <option name="width" value="1920" />
+    <option name="height" value="1200" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -229,15 +228,15 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1440" height="900" extended-state="0" />
+    <frame x="1440" y="0" width="1920" height="1200" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.26752505" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.19914803" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49928468" visible="true" weight="0.48795182" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49928468" visible="true" weight="0.2902655" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -395,8 +394,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Controllers/BookController.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="257">
-          <caret line="160" column="40" selection-start-line="160" selection-start-column="40" selection-end-line="160" selection-end-column="40" />
+        <state relative-caret-position="496">
+          <caret line="150" selection-start-line="150" selection-end-line="150" />
         </state>
       </provider>
     </entry>
