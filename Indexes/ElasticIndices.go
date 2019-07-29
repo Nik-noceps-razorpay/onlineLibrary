@@ -38,6 +38,7 @@ func MakeIndex(x string) {
 			// Handle error
 			fmt.Println("error in create index: ")
 			panic(err)
+
 		}
 		if !createIndex.Acknowledged {
 			// Not acknowledged

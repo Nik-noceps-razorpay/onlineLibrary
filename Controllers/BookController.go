@@ -7,8 +7,10 @@ import (
 	"github.com/gin-gonic/gin"
 	"gopkg.in/olivere/elastic.v5"
 	"io/ioutil"
+	"net/http"
 	"onlineLibrary/DB_connection"
 	"onlineLibrary/Models"
+	"strconv"
 	"strings"
 	"time"
 
@@ -101,7 +103,6 @@ func UploadFromFile(c *gin.Context) {
 
 func SearchDocs(c *gin.Context) {
 
-
 	var formDate map[string]string
 
 	err := c.ShouldBind(&formDate)
@@ -113,57 +114,133 @@ func SearchDocs(c *gin.Context) {
 
 	}
 
+	if _, exists := formDate["time1"]; exists {
 
 
-	termQuery := elastic.NewTermQuery(formDate["key"], strings.ToLower(formDate["value"]))
+		//time1, _ := time.Parse(time., formDate["time1"])
+		//time2, _ := time.Parse(time.Unix(), formDate["time2"])
 
-
-
-	searchResult, err := DB_connection.DbElastic.Search().
-		Index("library").
-		Query(termQuery).
-		Do(context.Background())
-
-	if err != nil {
-		fmt.Println("error in search query")
-		//fmt.Printf("%T\n",searchResult)
-		panic(err)
-	}
-
-	fmt.Println("\n Query took", searchResult.TookInMillis, "milliseconds, and found", searchResult.TotalHits(), "results")
-
-	//fmt.Println(searchResult)
-
-	if searchResult.TotalHits() > 0 {
-		fmt.Println("Matches found are:\n ")
-		for _, hit := range searchResult.Hits.Hits {
-
-			var t Models.Books
-
-			err := json.Unmarshal(*hit.Source, &t)
-			if err!= nil {
-				fmt.Println("deserialization failed , error in json unmarshal in the SearchDoc function")
-				fmt.Println(err)
-			}
-
-			fmt.Println("Book Title :", t.Title, "\nAuthor:", t.Author, "\nPublisher:", t.Publisher, "\nCreatedAt:", t.CreatedAt )
-
-
+		time1, err1 := strconv.ParseInt(formDate["time1"], 10, 64)
+		if err1 != nil {
+			c.JSON(http.StatusBadRequest, "Incorrect time format in time1")
+			panic(err1)
+		}
+		time2, err2 := strconv.ParseInt(formDate["time2"], 10, 64)
+		if err2 != nil {
+			c.JSON(http.StatusBadRequest, "Incorrect time format in time2")
+			panic(err2)
 		}
 
+		fmt.Printf("%T\n",time1)
+		fmt.Println(time2)
+		query := elastic.NewRangeQuery("CreatedAt").
+				Gte(time1).
+				Lte(time2)
+
+
+		src, _ := query.Source()
+		data,_  := json.Marshal(src)
+		fmt.Println(string(data))
+
+
+
+
+		searchResult, err := DB_connection.DbElastic.Search().
+			Index("library").
+			Query(query).
+			From(0).
+			Size(10).
+			Do(context.Background())
+
+		if err != nil {
+			fmt.Println("error in search query")
+			//fmt.Printf("%T\n",searchResult)
+			panic(err)
+		}
+
+		fmt.Printf("%T\n", searchResult)
+
+		var s string
+
+		fmt.Println("number of matches are :", searchResult.TotalHits())
+
+		if searchResult.TotalHits() > 0 {
+			fmt.Println("Matches found are:\n ")
+			for _, hit := range searchResult.Hits.Hits {
+
+				var t Models.Books
+
+				err := json.Unmarshal(*hit.Source, &t)
+				if err != nil {
+					fmt.Println("deserialization failed , error in json unmarshal in the SearchDoc function")
+					fmt.Println(err)
+				}
+
+				fmt.Println("Book Title :", t.Title, "\nAuthor:", t.Author, "\nPublisher:", t.Publisher, "\nCreatedAt:", t.CreatedAt )
+				c.JSON(http.StatusOK, t)
+			}
+
+		} else {
+			s = fmt.Sprintf("No matches found ")
+			c.JSON(http.StatusNotFound, s)
+		}
+
+
 	} else {
-		fmt.Println("No matches found ")
+
+		termQuery := elastic.NewTermQuery(formDate["key"], strings.ToLower(formDate["value"]))
+
+		searchResult, err := DB_connection.DbElastic.Search().
+			Index("library").
+			Query(termQuery).
+			Do(context.Background())
+
+		if err != nil {
+			fmt.Println("error in search query")
+			//fmt.Printf("%T\n",searchResult)
+			panic(err)
+		}
+
+		fmt.Println("\n Query took", searchResult.TookInMillis, "milliseconds, and found", searchResult.TotalHits(), "results")
+
+		//fmt.Println(searchResult)
+
+		var s string
+
+		if searchResult.TotalHits() > 0 {
+			fmt.Println("Matches found are:\n ")
+			for _, hit := range searchResult.Hits.Hits {
+
+				var t Models.Books
+
+				err := json.Unmarshal(*hit.Source, &t)
+				if err != nil {
+					fmt.Println("deserialization failed , error in json unmarshal in the SearchDoc function")
+					fmt.Println(err)
+				}
+
+				//s = fmt.Sprintf("Book Title :", t.Title, "\nAuthor:", t.Author, "\nPublisher:", t.Publisher, "\nCreatedAt:", t.CreatedAt )
+				c.JSON(http.StatusOK, t)
+			}
+
+		} else {
+			s = fmt.Sprintf("No matches found ")
+			c.JSON(http.StatusNotFound, s)
+		}
+
 	}
+
 
 }
 
+//func simpleSearch(c *gin.Context)
 
 
 
 func Put(ctx *gin.Context, x Models.Books) {
 	//fmt.Printf("% T\n",x)
 
-	x.CreatedAt = time.Now()
+	x.CreatedAt = time.Now().UnixNano()
 
 	fmt.Println(x)
 
@@ -180,6 +257,8 @@ func Put(ctx *gin.Context, x Models.Books) {
 		fmt.Println(err)
 	}
 
+
 	fmt.Println("Indexed the book", put.Id,"in index", put.Index, "type", put.Type)
+	ctx.JSON(http.StatusOK, x)
 
 }

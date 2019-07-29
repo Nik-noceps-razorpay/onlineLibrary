@@ -1,9 +1,5 @@
 package Models
 
-import (
-	"time"
-)
-
 
 
 
@@ -11,7 +7,7 @@ type Books struct {
 	Title     string `json:"Title"`
 	Author    string `json:"Author"`
 	Publisher string `json:"Publisher"`
-	CreatedAt time.Time
+	CreatedAt int64
 }
 
 var BookMapping = `{
@@ -26,8 +22,8 @@ var BookMapping = `{
 				"Author": {"type": "text"},
 				"Publisher": {"type": "keyword"},
 				"CreatedAt": {
-					"type": "date"
-					"format": "yyyy-MM-dd HH:mm:ss"
+					"type": "date",
+					"format": "epoch_millis"
 				}
 			}
 		}
